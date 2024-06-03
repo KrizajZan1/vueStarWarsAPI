@@ -9,7 +9,7 @@
       <p>Eye Color: <b>{{ character.eye_color }}</b></p>
       <p>Birth Year: <b>{{ character.birth_year }}</b></p>
       <p>Gender: <b>{{ character.gender }}</b></p>
-      <button type="button" @click="$emit('edit')" class="edit-button">Edit</button>
+      <button class="edit-button" @click="edit">Edit</button>
     </div>
     <div v-else>
       <p>Loading...</p>
@@ -19,13 +19,11 @@
 
 <script>
 export default {
-  name: "CharacterCard",
-  props: {
-    character: Object,
-    backgroundImage: String
-  },
-  mounted() {
-    console.log("CharacterCard mounted with character:", this.character);
+  props: ["character", "backgroundImage"],
+  methods: {
+    edit() {
+      this.$emit("edit", this.character.data); 
+    }
   }
 };
 </script>
