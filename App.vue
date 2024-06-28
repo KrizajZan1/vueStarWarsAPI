@@ -7,15 +7,15 @@
         :key="character.id"
         :character="character.data"
         :background-image="character.image"
-        @edit="editCharacter"
+        @edit="editCharacter(character)"
       />
     </div>
-    <EditPopup v-if="isEditPopupVisible" :character="selectedCharacter" @close="closeEditPopup" />
+    <EditPopup v-if="isEditPopupVisible" :character="selectedCharacter" @close="closeEditPopup"/>
   </div>
 </template>
 
-
 <script>
+/* Imported all the neccesary components */
 import NavBar from "./Navbar.vue";
 import CharacterCard from "./CharacterCard.vue";
 import axios from "axios";
@@ -59,10 +59,11 @@ export default {
     };
   },
   async mounted() {
-    await Promise.all(
+    /* Fetching data from Star Wars API */
+    await Promise.all( 
       this.characters.map(async (character) => {
         try {
-          const response = await axios.get(character.url);
+          const response = await axios.get(character.url); /* Awaits to display all data? */
           character.data = response.data;
           console.log(
             `Fetched data for character ${character.id}:`,
@@ -75,11 +76,10 @@ export default {
     );
   },
   methods: {
-    editCharacter(characterData) {
-    this.selectedCharacter = characterData;
-    this.isEditPopupVisible = true;
-  },
-
+    editCharacter(character) {
+      this.selectedCharacter = character.data;
+      this.isEditPopupVisible = true;
+    },
     closeEditPopup() {
       this.isEditPopupVisible = false;
     }

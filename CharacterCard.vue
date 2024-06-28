@@ -1,3 +1,4 @@
+<!-- Created "cards" that contain display data from Star Wars API -->
 <template>
   <div class="character-card" :style="{ backgroundImage: `url(${backgroundImage})` }">
     <div v-if="character" class="text">
@@ -9,7 +10,7 @@
       <p>Eye Color: <b>{{ character.eye_color }}</b></p>
       <p>Birth Year: <b>{{ character.birth_year }}</b></p>
       <p>Gender: <b>{{ character.gender }}</b></p>
-      <button class="edit-button" @click="edit">Edit</button>
+      <button class="editButton" @click="edit"><b>Edit</b></button>
     </div>
     <div v-else>
       <p>Loading...</p>
@@ -22,8 +23,9 @@ export default {
   props: ["character", "backgroundImage"],
   methods: {
     edit() {
-      this.$emit("edit", this.character.data); 
-    }
+      this.$emit("edit", this.character); 
+      this.name = localStorage.getItem('newname') // ----------------------
+    },      
   }
 };
 </script>
@@ -39,19 +41,20 @@ export default {
   width: 20%;
   height: 70%;
   overflow: hidden;
-  box-shadow: 0 0 50px 10px rgba(255, 255, 0, 0.4);
+  box-shadow: 0 0 50px 10px rgba(255, 255, 0, 0.3);
 }
 
 .text {
+  margin-left: 20px;
   padding-top: 50%;
 }
 
-.edit-button {
-  justify-content: center;
-  align-items: center;
-  width: 60%;
+.editButton {
+  margin-left: 30%;
+  width: 35%;
+  height:45px;
   font-size: 20px;
   background-color: yellow;
-  border-radius: 10px;
+  border-radius: 7px;
 }
 </style>
