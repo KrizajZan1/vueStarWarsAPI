@@ -10,12 +10,11 @@
         @edit="editCharacter(character)"
       />
     </div>
-    <EditPopup v-if="isEditPopupVisible" :character="selectedCharacter" @close="closeEditPopup"/>
+    <EditPopup v-if="isEditPopupVisible" :character="selectedCharacter" @close="closeEditPopup" @save="updateCharacter"/>
   </div>
 </template>
 
 <script>
-/* Imported all the neccesary components */
 import NavBar from "./Navbar.vue";
 import CharacterCard from "./CharacterCard.vue";
 import axios from "axios";
@@ -55,25 +54,30 @@ export default {
         },
       ],
       isEditPopupVisible: false,
-      selectedCharacter: null
+      selectedCharacter: null,
     };
   },
+  // -----------------------------------------------------------------------------------------------------------------------------------
   async mounted() {
-    /* Fetching data from Star Wars API */
-    await Promise.all( 
+    this.characters = await Promise.all(
       this.characters.map(async (character) => {
-        try {
-          const response = await axios.get(character.url); /* Awaits to display all data? */
-          character.data = response.data;
-          console.log(
-            `Fetched data for character ${character.id}:`,
-            character.data
-          );
-        } catch (error) {
-          console.error(`Error fetching data for ${character.id}:`, error);
+        const localCharacterData = localStorage.getItem(`character_${character.id}`);
+        if (localCharacterData) {
+          character.data = JSON.parse(localCharacterData);
+        } else {
+          try {
+            const response = await axios.get(character.url);
+            character.data = response.data;
+            localStorage.setItem(`character_${character.id}`, JSON.stringify(character.data));
+          } catch (error) {
+            console.error(`Error fetching data for ${character.id}:`, error);
+          }
         }
+        return character;
       })
     );
+  // ----------------------------------------------------------------------------------------------------------------------------------- 
+    console.log(localStorage);
   },
   methods: {
     editCharacter(character) {
@@ -82,8 +86,18 @@ export default {
     },
     closeEditPopup() {
       this.isEditPopupVisible = false;
-    }
-  }
+    },
+    // --------
+    updateCharacter(updatedCharacter) {
+      const index = this.characters.findIndex((character) => character.data.url === updatedCharacter.url);
+      if (index !== -1) {
+        this.characters[index].data = updatedCharacter;
+        localStorage.setItem(`character_${this.characters[index].id}`, JSON.stringify(updatedCharacter));
+      }
+      this.closeEditPopup();
+    // --------
+    },
+  },
 };
 </script>
 
@@ -98,6 +112,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100%;
 }
 </style>

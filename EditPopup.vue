@@ -2,21 +2,20 @@
 <template>
   <div class="popup">
     <div class="popup-content">
-      <div v-if="id = 1">
+      <div>
         <h2>Editing character: {{ character.name }}</h2>
         <div v-if="character">
-          <p>Name: <b>{{ character.name }}</b></p>
-          <input v-model="newname" placeholder="Change name"> 
-          <p>Height: <b>{{ character.height }}</b></p>
-          <p>Mass: <b>{{ character.mass }}</b></p>
-          <p>Hair Color: <b>{{ character.hair_color }}</b></p>
-          <p>Skin Color: <b>{{ character.skin_color }}</b></p>
-          <p>Eye Color: <b>{{ character.eye_color }}</b></p>
-          <p>Birth Year: <b>{{ character.birth_year }}</b></p>
-          <p>Gender: <b>{{ character.gender }}</b></p>
+          <p>Name: <input v-model="character.name" placeholder="Change name" class="input"> </p>
+          <p>Height: <input v-model="character.height" placeholder="Change height" class="input"> </p>
+          <p>Mass: <input v-model="character.mass" placeholder="Change mass" class="input"> </p>
+          <p>Hair Color: <input v-model="character.hair_color" placeholder="Change hair color" class="input"> </p>
+          <p>Skin Color: <input v-model="character.skin_color" placeholder="Change skin color" class="input"> </p>
+          <p>Eye Color: <input v-model="character.eye_color" placeholder="Change eye color" class="input"> </p>
+          <p>Birth Year: <input v-model="character.birth_year" placeholder="Change birth year" class="input"> </p>
+          <p>Gender: <input v-model="character.gender" placeholder="Change gender" class="input"> </p>
         </div>
-        <button class="save" @click="savePopup">Save</button>
-        <button class="close" @click="closePopup">Cancel</button>
+        <button class="save" @click="savePopup"><b>Save</b></button>
+        <button class="close" @click="closePopup"><b>Cancel</b></button>
       </div>
     </div>
   </div>
@@ -27,13 +26,11 @@ export default {
   props: ["character"],
   methods: {
     savePopup() {
-      localStorage.setItem('newname', this.newname),
-      console.log(localStorage), // --------------------------------------------
-      this.closePopup();
+      this.$emit("save", this.character);
     },
     closePopup() {
       this.$emit("close");
-    }
+    },
   },
 };
 </script>
@@ -53,12 +50,33 @@ export default {
 
 .popup-content {
   background-color: black;
+  position: fixed;
+  width: 30%;
+  height: 50%;
+  resize: none;
   padding: 20px;
   border-radius: 5px;
 }
 
+.input{
+  float: right;
+}
+
 .save{
+  background-color: green;
   margin-top: 20px;
   margin-right: 10px;
+  width: 100px;
+  height: 40px;
+  font-size: 15px;
+  border-radius: 7px;
+}
+
+.close{
+  background-color: red;
+  width: 100px;
+  height: 40px;
+  font-size: 15px;
+  border-radius: 7px;
 }
 </style>
