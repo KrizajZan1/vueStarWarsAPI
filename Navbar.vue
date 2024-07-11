@@ -1,4 +1,4 @@
-<!-- Created Navbar element which contains all the neccesary block like in figma -->
+<!-- Created Navbar element which contains all the neccesary blocks just like in figma -->
 <template>
   <nav class="navbar">
     <ul>
@@ -36,10 +36,11 @@ export default {
   align-items: center;
   height: 100%;
   width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 .navbar li {
-  /* Change margin between elements so they appear more appart */
   margin: 0 50px;
   font-weight: bold;
   font-size: 18px;
@@ -47,9 +48,39 @@ export default {
 
 #logo {
   height: 120px;
-  /* Change margin around logo so elements are closer */
   margin: 0 20px;
   display: flex;
   justify-content: center;
 }
+
+@media (max-width: 768px) {
+  .navbar {
+    height: 100px;
+  }
+
+  .navbar li {
+    margin: 0 30px;
+    font-size: 16px;
+  }
+
+  #logo {
+    height: 80px;
+  }
+}
+
+@media (max-width: 500px) {
+  .navbar {
+    height: 80px;
+  }
+
+  .navbar li {
+    margin: 0 20px;
+    font-size: 14px;
+  }
+
+  #logo {
+    height: 60px;
+  }
+}
+
 </style>

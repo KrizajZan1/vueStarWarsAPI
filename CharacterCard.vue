@@ -59,4 +59,18 @@ export default {
   background-color: yellow;
   border-radius: 7px;
 }
+
+/* MOBILE RESPONSIVE? */
+
+@media (max-width: 768px) {                               /* When max width is 768px (Tablet size) calculate width of the Card */
+  .character-card {
+    width: calc(50% - 40px);
+  }
+}
+
+@media (max-width: 500px) {                               /* When max width is 480px (Phone size) calculate width of the Card */
+  .character-card {
+    width: calc(100% - 40px);
+  }
+}
 </style>
