@@ -13,7 +13,7 @@
 
       <button class="editButton" @click="edit"><b>Edit</b></button>
     </div>
-    <div v-else>
+    <div v-else> <!-- If we get error while fetching data then "retrieving data" shows-->
       <p>Retrieving data...</p>
     </div>
   </div>
@@ -60,7 +60,7 @@ export default {
   border-radius: 7px;
 }
 
-/* MOBILE RESPONSIVE? */
+/* MOBILE RESPONSIVE */
 
 @media (max-width: 768px) {                               /* When max width is 768px (Tablet size) calculate width of the Card */
   .character-card {

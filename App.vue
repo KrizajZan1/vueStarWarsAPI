@@ -2,6 +2,7 @@
   <div id="app">
     <NavBar />
     <div id="container">
+      <!-- Create CharacterCard component for each Character -->
       <CharacterCard
         v-for="character in characters"
         :key="character.id"
@@ -15,7 +16,7 @@
 </template>
 
 <script>
-import NavBar from "./Navbar.vue";
+import NavBar from "./NavBar.vue";
 import CharacterCard from "./CharacterCard.vue";
 import EditPopup from "./EditPopup.vue";
 import axios from "axios";
@@ -57,26 +58,24 @@ export default {
       selectedCharacter: null,
     };
   },
-  // -----------------------------------------------------------------------------------------------------------------------------------
   async mounted() {
-    this.characters = await Promise.all(
+    this.characters = await Promise.all(  // Load data for character when CharacterCard component is loaded
       this.characters.map(async (character) => {
-        const StorageCharacterData = localStorage.getItem(`character_${character.id}`);                // Loads data from localStorage
+        const StorageCharacterData = localStorage.getItem(`character_${character.id}`); // Upload data from localStorage
         if (StorageCharacterData) {
-          character.data = JSON.parse(StorageCharacterData);                                           // Converts from JSON to string and saves to character.data
-        } else {                                                                                       // If no data in localStorage - fetch data from API
+          character.data = JSON.parse(StorageCharacterData); // Convert from JSON file to string and save data to variable character.data
+        } else { // If data isn't in localStorage fetch it from API with Axios library
           try {
-            const response = await axios.get(character.url);                                           // Save data from API to variable response
-            character.data = response.data;                                                            // Sets data from API as character.data
-            localStorage.setItem(`character_${character.id}`, JSON.stringify(character.data));         // Saves data from API to localStorage using characterID and character.data
+            const response = await axios.get(character.url); // Save data from API to response variable
+            character.data = response.data; // Save data from API as character.data
+            localStorage.setItem(`character_${character.id}`, JSON.stringify(character.data)); // Save data from API to localStorage
           } catch (error) {
-            console.error(`Error while fetching data for ${character.id}:`, error);                    // If anything goes wrong we can see the error in console
+            console.error(`Error while fetching data for ${character.id}:`, error); // If we get an error, we see it in the console
           }
         }
         return character;
       })
-    );
-  // ----------------------------------------------------------------------------------------------------------------------------------- 
+    ); 
   },
   methods: {
     editCharacter(character) {
@@ -86,15 +85,13 @@ export default {
     closeEditPopup() {
       this.isEditPopupVisible = false;
     },
-    // -----------------------------------------------------------------------------------------------------------------------------------
     updateCharacter(updatedCharacter) {
-      const index = this.characters.findIndex((character) => character.data.url === updatedCharacter.url);        
+      const index = this.characters.findIndex((character) => character.data.url === updatedCharacter.url);
       if (index !== -1) {
-        this.characters[index].data = updatedCharacter;
-        localStorage.setItem(`character_${this.characters[index].id}`, JSON.stringify(updatedCharacter));
+        this.characters[index].data = updatedCharacter; // Posodobi podatke lika
+        localStorage.setItem(`character_${this.characters[index].id}`, JSON.stringify(updatedCharacter)); // Shrani posodobljene podatke v localStorage
       }
       this.closeEditPopup();
-    // -----------------------------------------------------------------------------------------------------------------------------------
     },
   },
 };
