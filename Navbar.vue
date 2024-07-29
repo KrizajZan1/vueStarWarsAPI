@@ -5,7 +5,7 @@
       <li>Upcoming</li>
       <li>Legacy</li>
       <li id="logo">
-        <img src="/images/Star_Wars_Logo.svg.png" alt="Star Wars logo" />
+        <img src="/Star_Wars_Logo.svg.png" alt="Star Wars logo" />
       </li>
       <li>Merch</li>
       <li>About</li>
