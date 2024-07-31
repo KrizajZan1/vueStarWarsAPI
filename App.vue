@@ -21,9 +21,9 @@ import CharacterCard from "./CharacterCard.vue";
 import EditPopup from "./EditPopup.vue";
 import axios from "axios";
 
-import yodaImage from "images/yoda.jpg";
-import darthVaderImage from "images/darthVader.jpg";
-import obiWanKenobiImage from "images/obiWanKenobi.webp";
+import yodaImage from "../vueStarWarsAPI/images/yoda.jpg";
+import darthVaderImage from "../vueStarWarsAPI/images/darthVader.jpg";
+import obiWanKenobiImage from "../vueStarWarsAPI/images/obiWanKenobi.webp";
 
 export default {
   name: "App",
